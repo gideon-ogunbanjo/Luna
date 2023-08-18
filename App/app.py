@@ -59,6 +59,14 @@ if uploaded_file is not None:
         elif algorithm == "Decision Tree":
             max_depth = st.slider("Max Depth", 1, 20, 5)
             clf = DecisionTreeClassifier(max_depth=max_depth, random_state=42)
+            
+        # Training and evaluating the classifier
+        clf.fit(X_train, y_train)
+        y_pred = clf.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+
+        # Display accuracy
+        st.write(f"Accuracy: {accuracy:.2f}")
 
     
     
