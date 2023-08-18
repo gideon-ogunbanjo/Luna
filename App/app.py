@@ -5,7 +5,7 @@ from sklearn.metrics import accuracy_score
 
 # Page configuration
 st.set_page_config(
-    page_title="Interactive Model Tuning App",
+    page_title="Luna",
     layout="centered"
 )
 
