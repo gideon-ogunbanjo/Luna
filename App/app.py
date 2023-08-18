@@ -8,3 +8,6 @@ st.set_page_config(
     page_title="Interactive Model Tuning App",
     layout="centered"
 )
+
+# App title
+st.title("Luna - Interactive Model Tuning App")
