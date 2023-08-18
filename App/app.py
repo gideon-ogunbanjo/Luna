@@ -34,6 +34,31 @@ if uploaded_file is not None:
     X = df.drop(columns=[target_col])
     y = df[target_col]
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    
+    # Displays model performance for selected algorithms
+    st.subheader("Model Performance")
+
+    for algorithm in algorithms:
+        st.write(f"**{algorithm}**")
+
+        # Setting up and configure the classifier based on user choice
+        if algorithm == "Random Forest":
+            n_estimators = st.slider("Number of Estimators", 10, 100, 50)
+            max_depth = st.slider("Max Depth", 1, 20, 10)
+            clf = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
+        elif algorithm == "Gradient Boosting":
+            n_estimators = st.slider("Number of Estimators", 10, 100, 50)
+            learning_rate = st.slider("Learning Rate", 0.01, 1.0, 0.1)
+            clf = GradientBoostingClassifier(n_estimators=n_estimators, learning_rate=learning_rate, random_state=42)
+        elif algorithm == "SVM":
+            C = st.slider("Regularization Parameter (C)", 0.1, 10.0, 1.0)
+            clf = SVC(C=C, random_state=42)
+        elif algorithm == "KNN":
+            n_neighbors = st.slider("Number of Neighbors", 1, 20, 5)
+            clf = KNeighborsClassifier(n_neighbors=n_neighbors)
+        elif algorithm == "Decision Tree":
+            max_depth = st.slider("Max Depth", 1, 20, 5)
+            clf = DecisionTreeClassifier(max_depth=max_depth, random_state=42)
 
     
     
