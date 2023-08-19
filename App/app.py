@@ -17,7 +17,7 @@ st.set_page_config(
 
 # App title
 st.title("Luna - Interactive Model Tuning App")
-st.write("Luna is an app thatnallows users to upload a CSV dataset, select different machine learning algorithms, tune hyperparameters, and view the model performance metrics")
+st.write("Luna is an app that allows users to upload a CSV dataset, select different machine learning algorithms, tune hyperparameters, and view the model performance metrics")
 st.header("Get Started Now!")
 
 # Upload dataset
@@ -40,6 +40,26 @@ if uploaded_file is not None:
         y = pd.factorize(y)[0]  # Convert categorical target to numerical labels
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
+    # Algorithm Recommendation
+    def recommend_algorithm(X, y, problem_type):
+        num_samples, num_features = X.shape
+
+        if problem_type == "Classification":
+            if num_samples > 1000 and num_features > 10:
+                return "Random Forest"
+            else:
+                return "Gradient Boosting"
+        else:  # Regression
+            if num_samples > 1000 and num_features > 10:
+                return "Random Forest Regression"
+            else:
+                return "Linear Regression"
+
+    # Display algorithm recommendation
+    recommended_algorithm = recommend_algorithm(X_train, y_train, problem_type)
+    st.sidebar.subheader("Recommended Algorithm")
+    st.sidebar.write(f"The recommended algorithm for this dataset is: **{recommended_algorithm}**")
+
     # Display model performance for selected algorithms
     st.subheader("Model Performance")
 
@@ -60,31 +80,31 @@ if uploaded_file is not None:
                 elif algorithm == "Decision Tree":
                     max_depth = st.slider("Max Depth", 1, 20, 5)
                     clf = DecisionTreeClassifier(max_depth=max_depth, random_state=42)
-            else:
-                if algorithm == "Random Forest":
-                    n_estimators = st.slider("Number of Estimators", 10, 100, 50)
-                    max_depth = st.slider("Max Depth", 1, 20, 10)
-                    clf = RandomForestRegressor(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
-                elif algorithm == "Gradient Boosting":
-                    n_estimators = st.slider("Number of Estimators", 10, 100, 50)
-                    learning_rate = st.slider("Learning Rate", 0.01, 1.0, 0.1)
-                    clf = GradientBoostingRegressor(n_estimators=n_estimators, learning_rate=learning_rate, random_state=42)
-                elif algorithm == "Decision Tree":
-                    max_depth = st.slider("Max Depth", 1, 20, 5)
-                    clf = DecisionTreeRegressor(max_depth=max_depth, random_state=42)
+        else:
+            if algorithm == "Random Forest":
+                n_estimators = st.slider("Number of Estimators", 10, 100, 50)
+                max_depth = st.slider("Max Depth", 1, 20, 10)
+                clf = RandomForestRegressor(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
+            elif algorithm == "Gradient Boosting":
+                n_estimators = st.slider("Number of Estimators", 10, 100, 50)
+                learning_rate = st.slider("Learning Rate", 0.01, 1.0, 0.1)
+                clf = GradientBoostingRegressor(n_estimators=n_estimators, learning_rate=learning_rate, random_state=42)
+            elif algorithm == "Decision Tree":
+                max_depth = st.slider("Max Depth", 1, 20, 5)
+                clf = DecisionTreeRegressor(max_depth=max_depth, random_state=42)
         
-        elif algorithm == "SVM":
-            C = st.slider("Regularization Parameter (C)", 0.1, 10.0, 1.0)
-            clf = SVC(C=C, random_state=42)
-        elif algorithm == "KNN":
-            n_neighbors = st.slider("Number of Neighbors", 1, 20, 5)
-            clf = KNeighborsClassifier(n_neighbors=n_neighbors)
-        elif algorithm == "Linear Regression":
-            clf = LinearRegression()
-        elif algorithm == "Random Forest Regression":
-            n_estimators = st.slider("Number of Estimators", 10, 100, 50)
-            max_depth = st.slider("Max Depth", 1, 20, 10)
-            clf = RandomForestRegressor(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
+            elif algorithm == "SVM":
+                C = st.slider("Regularization Parameter (C)", 0.1, 10.0, 1.0)
+                clf = SVC(C=C, random_state=42)
+            elif algorithm == "KNN":
+                n_neighbors = st.slider("Number of Neighbors", 1, 20, 5)
+                clf = KNeighborsClassifier(n_neighbors=n_neighbors)
+            elif algorithm == "Linear Regression":
+                clf = LinearRegression()
+            elif algorithm == "Random Forest Regression":
+                n_estimators = st.slider("Number of Estimators", 10, 100, 50)
+                max_depth = st.slider("Max Depth", 1, 20, 10)
+                clf = RandomForestRegressor(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
 
         clf.fit(X_train, y_train)
         y_pred = clf.predict(X_test)
