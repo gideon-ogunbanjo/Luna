@@ -1,13 +1,18 @@
 import streamlit as st
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import accuracy_score, mean_squared_error
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, RandomForestRegressor, GradientBoostingRegressor
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+import plotly.express as px
+import io
+import seaborn as sns
+
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # Page configuration
 st.set_page_config(
@@ -43,13 +48,12 @@ if uploaded_file is not None:
     # Algorithm Recommendation
     def recommend_algorithm(X, y, problem_type):
         num_samples, num_features = X.shape
-
         if problem_type == "Classification":
             if num_samples > 1000 and num_features > 10:
                 return "Random Forest"
             else:
                 return "Gradient Boosting"
-        else:  # Regression
+        else:
             if num_samples > 1000 and num_features > 10:
                 return "Random Forest Regression"
             else:
@@ -64,9 +68,8 @@ if uploaded_file is not None:
     st.subheader("Model Performance")
 
     for algorithm in algorithms:
-        st.write(f"**{algorithm}**")
+        st.write(f"Recommended Algorithm: {algorithm}")
 
-        # Model Configuration
         if algorithm in ["Random Forest", "Gradient Boosting", "Decision Tree"]:
             if problem_type == "Classification":
                 if algorithm == "Random Forest":
@@ -92,7 +95,6 @@ if uploaded_file is not None:
             elif algorithm == "Decision Tree":
                 max_depth = st.slider("Max Depth", 1, 20, 5)
                 clf = DecisionTreeRegressor(max_depth=max_depth, random_state=42)
-        
             elif algorithm == "SVM":
                 C = st.slider("Regularization Parameter (C)", 0.1, 10.0, 1.0)
                 clf = SVC(C=C, random_state=42)
@@ -115,5 +117,20 @@ if uploaded_file is not None:
         else:
             score = mean_squared_error(y_test, y_pred)
             st.write(f"Mean Squared Error: {score:.2f}")
-link = 'Created by [Gideon Ogunbanjo](https://gideonogunbanjo.netlify.app)'
-st.markdown(link, unsafe_allow_html=True)
+    
+    # Data Visualization
+    st.subheader("Data Visualization")
+    st.write("Explore and visualize your data:")
+    # Plotly Scatter Plot
+    st.sidebar.subheader("Data Visualization")
+    x_column = st.sidebar.selectbox("X Axis", df.columns)
+    y_column = st.sidebar.selectbox("Y Axis", df.columns)
+
+    st.subheader("Plotly Scatter Plot")
+
+    if st.sidebar.button("Generate Plotly Scatter Plot"):
+        fig = px.scatter(df, x=x_column, y=y_column, title='Scatter Plot')
+        st.plotly_chart(fig, use_container_width=True)
+
+    link = 'Created by [Gideon Ogunbanjo](https://gideonogunbanjo.netlify.app)'
+    st.markdown(link, unsafe_allow_html=True)
