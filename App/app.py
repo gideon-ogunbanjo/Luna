@@ -16,8 +16,8 @@ st.set_page_config(
 )
 
 # App title
-st.title("Luna - Interactive Model Tuning App")
-st.write("Luna is an app that allows users to upload a CSV dataset, select different machine learning algorithms, tune hyperparameters, and view the model performance metrics")
+st.title("Luna - Interactive Model Tuning, Recommendation and Evaluation App")
+st.write("Luna is an interactive model tuning and evaluation app. Upload a CSV dataset, select various machine learning algorithms, fine-tune hyperparameters, and visualize model performance metrics.")
 st.header("Get Started Now!")
 
 # Upload dataset
