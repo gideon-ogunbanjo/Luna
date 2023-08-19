@@ -1,6 +1,6 @@
-# Luna - Interactive Model Tuning App
+# Luna - Luna - Interactive Model Tuning, Recommendation and Evaluation App
 
-Luna is an app that allows users to upload a CSV dataset, select different machine learning algorithms, tune hyperparameters, and view the model performance metrics
+Luna is an interactive model tuning and evaluation app that allows userd upload a CSV dataset, select various machine learning algorithms, fine-tune hyperparameters, and visualize model performance metrics.
 ## Features
 - File Upload: Luna allows users upload CSV files to the app.
 - Target Column and Problem Type Selection: Luna allows users select the target column and problem type (Classification or Regression) from the sidebar.
