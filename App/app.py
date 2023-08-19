@@ -115,3 +115,5 @@ if uploaded_file is not None:
         else:
             score = mean_squared_error(y_test, y_pred)
             st.write(f"Mean Squared Error: {score:.2f}")
+link = 'Created by [Gideon Ogunbanjo](https://gideonogunbanjo.netlify.app)'
+st.markdown(link, unsafe_allow_html=True)
