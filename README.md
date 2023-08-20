@@ -4,7 +4,7 @@ Luna is an interactive model tuning and evaluation app that allows users upload 
 ## Features
 - File Upload: Luna allows users upload CSV files to the app.
 - Target Column and Problem Type Selection: Luna allows users select the target column and problem type (Classification or Regression) from the sidebar.
-- Algorithm Selection: Luna has a wide variety of supervised learning algorithms which users can select from a list (Random Forest, Gradient Boosting, SVM, KNN, Decision Tree, Linear Regression, Random Forest Regression).
+- Algorithm Selection: Luna has a wide variety of supervised learning and unsupervised learning algorithms which users can select from a list (Random Forest, Gradient Boosting, SVM, KNN, Decision Tree, Linear Regression, Random Forest Regression).
 - Algorithm Selection: Luna has an in-built algorithm recommendation system that recommends the most suitable algorithm based on the dataset characteristics and problem type.
 - Hyper Parameter Configuration: Luna allows users configure hyperparameters of selected algorithms using sliders.
 - Data Visualization: Luna generates a Plotly line plot based on the selected columns in the dataset.
@@ -13,7 +13,7 @@ Luna is an interactive model tuning and evaluation app that allows users upload 
 ### Limitations
 1. Limited Dataset Size: Luna is designed to handle relatively small to medium-sized datasets. For large datasets with thousands of samples and numerous features, the app's performance might be compromised, leading to slower execution times and potential memory limitations.
 
-2. Algorithm Selection: While Luna provides a variety of machine learning algorithms to choose from, the selection is not exhaustive. Luna is limited to **Supervised Learning Algorithms** only. Users might require algorithms that are not included in the app. Additionally, the app's algorithm recommendations are based on basic dataset characteristics and might not account for domain-specific considerations.
+2. Algorithm Selection: While Luna provides a variety of machine learning algorithms to choose from, the selection is not exhaustive. Luna is limited to **Supervised Learning & Unsupervised Algorithms** only. Users might require algorithms that are not included in the app. Additionally, the app's algorithm recommendations are based on basic dataset characteristics and might not account for domain-specific considerations.
 
 3. Hyperparameter Tuning: While the app enables users to adjust hyperparameters, it offers only a limited set of hyperparameters for tuning. Advanced users might need access to a broader range of hyperparameters to fine-tune algorithms more precisely.
 
