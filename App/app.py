@@ -7,9 +7,6 @@ from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression
-from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
-from sklearn.decomposition import PCA
-from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 import plotly.express as px
 
@@ -36,8 +33,8 @@ if uploaded_file is not None:
     # Sidebar options
     st.sidebar.header("Model Configuration")
     target_col = st.sidebar.selectbox("Select Target Column", df.columns)
-    problem_type = st.sidebar.selectbox("Problem Type", ["Classification", "Regression", "Clustering", "Dimensionality Reduction"])
-    algorithms = st.sidebar.multiselect("Select Algorithms", ["Random Forest", "Gradient Boosting", "SVM", "KNN", "Decision Tree", "Linear Regression", "Random Forest Regression", "K-Means Clustering", "Hierarchical Clustering", "DBSCAN", "PCA", "t-SNE"])
+    problem_type = st.sidebar.selectbox("Problem Type", ["Classification", "Regression"])
+    algorithms = st.sidebar.multiselect("Select Algorithms", ["Random Forest", "Gradient Boosting", "SVM", "KNN", "Decision Tree", "Linear Regression"])
 
     # Split the dataset
     X = df.drop(columns=[target_col])
@@ -47,7 +44,7 @@ if uploaded_file is not None:
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     # Algorithm Recommendation
-    def recommend_algorithm(X, y, problem_type, unsupervised_algorithms):
+    def recommend_algorithm(X, y, problem_type):
         num_samples, num_features = X.shape
         if problem_type == "Classification":
             if num_samples > 1000 and num_features > 10:
@@ -59,22 +56,10 @@ if uploaded_file is not None:
                 return "Random Forest Regression"
             else:
                 return "Linear Regression"
-        elif problem_type == "Clustering":
-            if "K-Means Clustering" in unsupervised_algorithms:
-                return "K-Means Clustering"
-            elif "Hierarchical Clustering" in unsupervised_algorithms:
-                return "Hierarchical Clustering"
-            elif "DBSCAN" in unsupervised_algorithms:
-                return "DBSCAN"
-        elif problem_type == "Dimensionality Reduction":
-            if "PCA" in unsupervised_algorithms:
-                return "PCA"
-            elif "t-SNE" in unsupervised_algorithms:
-                return "t-SNE"
         return None
 
     # Display algorithm recommendation
-    recommended_algorithm = recommend_algorithm(X_train, y_train, problem_type, algorithms)
+    recommended_algorithm = recommend_algorithm(X_train, y_train, problem_type)
     st.sidebar.subheader("Recommended Algorithm")
     st.sidebar.write(f"The recommended algorithm for this dataset is: **{recommended_algorithm}**")
 
@@ -117,54 +102,17 @@ if uploaded_file is not None:
                 clf = KNeighborsClassifier(n_neighbors=n_neighbors)
             elif algorithm == "Linear Regression":
                 clf = LinearRegression()
-            elif algorithm == "Random Forest Regression":
-                n_estimators = st.slider("Number of Estimators", 10, 100, 50)
-                max_depth = st.slider("Max Depth", 1, 20, 10)
-                clf = RandomForestRegressor(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
-            elif algorithm == "K-Means Clustering":
-                n_clusters = st.slider("Number of Clusters", 2, 10, 3)
-                unsupervised_clf = KMeans(n_clusters=n_clusters, random_state=42)
-                cluster_labels = unsupervised_clf.fit_predict(X)
-                st.write(f"Cluster Labels: {cluster_labels}")
-            elif algorithm == "Hierarchical Clustering":
-                n_clusters = st.slider("Number of Clusters", 2, 10, 3)
-                linkage = st.selectbox("Linkage Method", ["ward", "complete", "average"])
-                unsupervised_clf = AgglomerativeClustering(n_clusters=n_clusters, linkage=linkage)
-                cluster_labels = unsupervised_clf.fit_predict(X)
-                st.write(f"Cluster Labels: {cluster_labels}")
-            elif algorithm == "DBSCAN":
-                eps = st.slider("Epsilon", 0.1, 2.0, 0.5)
-                min_samples = st.slider("Min Samples", 2, 20, 5)
-                unsupervised_clf = DBSCAN(eps=eps, min_samples=min_samples)
-                cluster_labels = unsupervised_clf.fit_predict(X)
-                st.write(f"Cluster Labels: {cluster_labels}")
-            elif algorithm == "PCA":
-                num_components = st.slider("Number of Components", 1, min(X.shape), 2)
-                unsupervised_clf = PCA(n_components=num_components, random_state=42)
-                reduced_X = unsupervised_clf.fit_transform(X)
-                st.write(f"Explained Variance Ratios: {unsupervised_clf.explained_variance_ratio_}")
-            elif algorithm == "t-SNE":
-                perplexity = st.slider("Perplexity", 5, 50, 30)
-                n_iter = st.slider("Number of Iterations", 250, 1000, 500)
-                unsupervised_clf = TSNE(n_components=2, perplexity=perplexity, n_iter=n_iter)
-                reduced_X = unsupervised_clf.fit_transform(X)
-                st.subheader("t-SNE Visualization")
-                plt.scatter(reduced_X[:, 0], reduced_X[:, 1], marker="o")
-                plt.xlabel("t-SNE Component 1")
-                plt.ylabel("t-SNE Component 2")
-                st.pyplot(plt)
 
-        if algorithm not in ["K-Means Clustering", "Hierarchical Clustering", "DBSCAN", "PCA", "t-SNE"]:
-            clf.fit(X_train, y_train)
-            y_pred = clf.predict(X_test)
+        clf.fit(X_train, y_train)
+        y_pred = clf.predict(X_test)
 
-            if problem_type == "Classification":
-                score = accuracy_score(y_test, y_pred)
-                st.write(f"Accuracy: {score:.2f}")
-            else:
-                score = mean_squared_error(y_test, y_pred)
-                st.write(f"Mean Squared Error: {score:.2f}")
-    
+        if problem_type == "Classification":
+            score = accuracy_score(y_test, y_pred)
+            st.write(f"Accuracy: {score:.2f}")
+        else:
+            score = mean_squared_error(y_test, y_pred)
+            st.write(f"Mean Squared Error: {score:.2f}")
+
     # Data Visualization
     st.subheader("Data Visualization")
     st.write("Explore and visualize your data:")
