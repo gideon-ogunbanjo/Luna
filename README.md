@@ -28,9 +28,9 @@ Luna is an interactive model tuning and evaluation app that allows users upload 
 ### Dependencies
 The app is built using Python and the following libraries:
 
-Streamlit
-Pandas
-Scikit-learn
+- Streamlit
+- Pandas
+- Scikit-learn
 You can find these dependencies listed in the `requirements.txt` file.
 
 > Luna is an evolving project, and its limitations might change as new features are added and the app is updated.
