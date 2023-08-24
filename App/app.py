@@ -113,19 +113,19 @@ if uploaded_file is not None:
             score = mean_squared_error(y_test, y_pred)
             st.write(f"Mean Squared Error: {score:.2f}")
 
-    # Data Visualization
-    st.subheader("Data Visualization")
-    st.write("Explore and visualize your data:")
-    # Plotly Scatter Plot
-    st.sidebar.subheader("Data Visualization")
-    x_column = st.sidebar.selectbox("X Axis", df.columns)
-    y_column = st.sidebar.selectbox("Y Axis", df.columns)
+    # # Data Visualization
+    # st.subheader("Data Visualization")
+    # st.write("Explore and visualize your data:")
+    # # Plotly Scatter Plot
+    # st.sidebar.subheader("Data Visualization")
+    # x_column = st.sidebar.selectbox("X Axis", df.columns)
+    # y_column = st.sidebar.selectbox("Y Axis", df.columns)
 
-    st.subheader("Plotly Scatter Plot")
+    # st.subheader("Plotly Scatter Plot")
 
-    if st.sidebar.button("Generate Plotly Scatter Plot"):
-        fig = px.scatter(df, x=x_column, y=y_column, title='Scatter Plot')
-        st.plotly_chart(fig, use_container_width=True)
+    # if st.sidebar.button("Generate Plotly Scatter Plot"):
+    #     fig = px.scatter(df, x=x_column, y=y_column, title='Scatter Plot')
+    #     st.plotly_chart(fig, use_container_width=True)
 
     link = 'Created by [Gideon Ogunbanjo](https://gideonogunbanjo.netlify.app)'
     st.markdown(link, unsafe_allow_html=True)
