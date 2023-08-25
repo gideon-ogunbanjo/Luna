@@ -103,7 +103,7 @@ if uploaded_file is not None:
 
     for algorithm in algorithms:
         st.write(f"Recommended Algorithm: {algorithm}")
-        st.header("Code Snippet:")
+        st.subheader("Code Snippet:")
 
         algorithm_info = algorithm_code_snippets.get(algorithm)
         if algorithm_info:
