@@ -66,12 +66,8 @@ if uploaded_file is not None:
     st.sidebar.subheader("Recommended Algorithm")
     st.sidebar.write(f"The recommended algorithm for this dataset is: **{recommended_algorithm}**")
 
-    # Display model performance for selected algorithms
+    # Model performance for selected algorithms
     st.subheader("Model Performance")
-    for algorithm in algorithms:
-        st.write(f"**{algorithm}**")
-        
-
 
     # Algorithm code snippets
     algorithm_code_snippets = {
@@ -102,7 +98,35 @@ if uploaded_file is not None:
     }
 
     for algorithm in algorithms:
-        st.write(f"Recommended Algorithm: {algorithm}")
+        st.write(f"Recommended Algorithm: **{algorithm}**")
+
+        # Initializing the model based on the selected algorithm
+        if algorithm == "Random Forest":
+            model = RandomForestClassifier() if problem_type == "Classification" else RandomForestRegressor()
+        elif algorithm == "Gradient Boosting":
+            model = GradientBoostingClassifier() if problem_type == "Classification" else GradientBoostingRegressor()
+        elif algorithm == "SVM":
+            model = SVC()
+        elif algorithm == "KNN":
+            model = KNeighborsClassifier()
+        elif algorithm == "Decision Tree":
+            model = DecisionTreeClassifier() if problem_type == "Classification" else DecisionTreeRegressor()
+        elif algorithm == "Linear Regression":
+            model = LinearRegression()
+
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_test)
+        
+
+        if problem_type == "Classification":
+            accuracy = accuracy_score(y_test, y_pred)
+            st.write(f"Accuracy Score: {accuracy:.4f}")
+        elif problem_type == "Regression":
+            mse = mean_squared_error(y_test, y_pred)
+            st.write(f"Mean Squared Error: {mse:.4f}")
+
+        
+
         st.subheader("Code Snippet:")
 
         algorithm_info = algorithm_code_snippets.get(algorithm)
