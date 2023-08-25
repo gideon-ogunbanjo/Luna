@@ -10,6 +10,7 @@ Luna is an interactive model tuning and evaluation app that allows users upload 
 - Data Visualization: Luna generates a Plotly line plot based on the selected columns in the dataset.
 - Interactive User Interface: Luna has an interactive UI that allows users view the model's performance metrics, such as accuracy for classification and mean squared error for regression.
 
+
 ### Limitations
 1. Limited Dataset Size: Luna is designed to handle relatively small to medium-sized datasets. For large datasets with thousands of samples and numerous features, the app's performance might be compromised, leading to slower execution times and potential memory limitations.
 

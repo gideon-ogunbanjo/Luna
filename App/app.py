@@ -119,9 +119,9 @@ print("Evaluation Result:", score)
             """
             st.code(complete_code, language="python")
 
-            # Add download button for Python file
-            download_filename = f"{algorithm.replace(' ', '_').lower()}_model.py"
-            st.download_button("Download Python File", data=complete_code, file_name=download_filename)
+            # # Add download button for Python file
+            # download_filename = f"{algorithm.replace(' ', '_').lower()}_model.py"
+            # st.download_button("Download Python File", data=complete_code, file_name=download_filename)
 
         else:
             st.write("No code snippets available for this algorithm.")
