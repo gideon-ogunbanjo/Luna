@@ -68,6 +68,10 @@ if uploaded_file is not None:
 
     # Display model performance for selected algorithms
     st.subheader("Model Performance")
+    for algorithm in algorithms:
+        st.write(f"**{algorithm}**")
+        
+
 
     # Algorithm code snippets
     algorithm_code_snippets = {
@@ -99,10 +103,11 @@ if uploaded_file is not None:
 
     for algorithm in algorithms:
         st.write(f"Recommended Algorithm: {algorithm}")
+        st.header("Code Snippet:")
 
         algorithm_info = algorithm_code_snippets.get(algorithm)
         if algorithm_info:
-            # Display the complete code
+
             complete_code = f"""
             {algorithm_info['import']}
 
