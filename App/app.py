@@ -69,66 +69,62 @@ if uploaded_file is not None:
     # Display model performance for selected algorithms
     st.subheader("Model Performance")
 
+    # Algorithm code snippets
+    algorithm_code_snippets = {
+        "Random Forest": {
+            "import": "from sklearn.ensemble import RandomForestClassifier",
+            "init": "clf = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth, random_state=42)",
+            "train": "clf.fit(X_train, y_train)",
+            "evaluate": "score = accuracy_score(y_test, clf.predict(X_test))",
+        },
+        "Gradient Boosting": {
+            "import": "from sklearn.ensemble import GradientBoostingClassifier",
+            "init": "clf = GradientBoostingClassifier(n_estimators=n_estimators, learning_rate=learning_rate, random_state=42)",
+            "train": "clf.fit(X_train, y_train)",
+            "evaluate": "score = accuracy_score(y_test, clf.predict(X_test))",
+        },
+        "Random Forest Regression": {
+            "import": "from sklearn.ensemble import RandomForestRegressor",
+            "init": "clf = RandomForestRegressor(n_estimators=n_estimators, max_depth=max_depth, random_state=42)",
+            "train": "clf.fit(X_train, y_train)",
+            "evaluate": "score = mean_squared_error(y_test, clf.predict(X_test))",
+        },
+        "Linear Regression": {
+            "import": "from sklearn.linear_model import LinearRegression",
+            "init": "clf = LinearRegression()",
+            "train": "clf.fit(X_train, y_train)",
+            "evaluate": "score = mean_squared_error(y_test, clf.predict(X_test))",
+        },
+        # Add more algorithms here
+    }
+
     for algorithm in algorithms:
         st.write(f"Recommended Algorithm: {algorithm}")
 
-        if algorithm in ["Random Forest", "Gradient Boosting", "Decision Tree"]:
-            if problem_type == "Classification":
-                if algorithm == "Random Forest":
-                    n_estimators = st.slider("Number of Estimators", 10, 100, 50)
-                    max_depth = st.slider("Max Depth", 1, 20, 10)
-                    clf = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
-                elif algorithm == "Gradient Boosting":
-                    n_estimators = st.slider("Number of Estimators", 10, 100, 50)
-                    learning_rate = st.slider("Learning Rate", 0.01, 1.0, 0.1)
-                    clf = GradientBoostingClassifier(n_estimators=n_estimators, learning_rate=learning_rate, random_state=42)
-                elif algorithm == "Decision Tree":
-                    max_depth = st.slider("Max Depth", 1, 20, 5)
-                    clf = DecisionTreeClassifier(max_depth=max_depth, random_state=42)
+        algorithm_info = algorithm_code_snippets.get(algorithm)
+        if algorithm_info:
+            # Display the complete code
+            complete_code = f"""
+{algorithm_info['import']}
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+{algorithm_info['init']}
+
+{algorithm_info['train']}
+
+{algorithm_info['evaluate']}
+
+print("Evaluation Result:", score)
+            """
+            st.code(complete_code, language="python")
+
+            # Add download button for Python file
+            download_filename = f"{algorithm.replace(' ', '_').lower()}_model.py"
+            st.download_button("Download Python File", data=complete_code, file_name=download_filename)
+
         else:
-            if algorithm == "Random Forest":
-                n_estimators = st.slider("Number of Estimators", 10, 100, 50)
-                max_depth = st.slider("Max Depth", 1, 20, 10)
-                clf = RandomForestRegressor(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
-            elif algorithm == "Gradient Boosting":
-                n_estimators = st.slider("Number of Estimators", 10, 100, 50)
-                learning_rate = st.slider("Learning Rate", 0.01, 1.0, 0.1)
-                clf = GradientBoostingRegressor(n_estimators=n_estimators, learning_rate=learning_rate, random_state=42)
-            elif algorithm == "Decision Tree":
-                max_depth = st.slider("Max Depth", 1, 20, 5)
-                clf = DecisionTreeRegressor(max_depth=max_depth, random_state=42)
-            elif algorithm == "SVM":
-                C = st.slider("Regularization Parameter (C)", 0.1, 10.0, 1.0)
-                clf = SVC(C=C, random_state=42)
-            elif algorithm == "KNN":
-                n_neighbors = st.slider("Number of Neighbors", 1, 20, 5)
-                clf = KNeighborsClassifier(n_neighbors=n_neighbors)
-            elif algorithm == "Linear Regression":
-                clf = LinearRegression()
-
-        clf.fit(X_train, y_train)
-        y_pred = clf.predict(X_test)
-
-        if problem_type == "Classification":
-            score = accuracy_score(y_test, y_pred)
-            st.write(f"Accuracy: {score:.2f}")
-        else:
-            score = mean_squared_error(y_test, y_pred)
-            st.write(f"Mean Squared Error: {score:.2f}")
-
-    # # Data Visualization
-    # st.subheader("Data Visualization")
-    # st.write("Explore and visualize your data:")
-    # # Plotly Scatter Plot
-    # st.sidebar.subheader("Data Visualization")
-    # x_column = st.sidebar.selectbox("X Axis", df.columns)
-    # y_column = st.sidebar.selectbox("Y Axis", df.columns)
-
-    # st.subheader("Plotly Scatter Plot")
-
-    # if st.sidebar.button("Generate Plotly Scatter Plot"):
-    #     fig = px.scatter(df, x=x_column, y=y_column, title='Scatter Plot')
-    #     st.plotly_chart(fig, use_container_width=True)
+            st.write("No code snippets available for this algorithm.")
 
     link = 'Created by [Gideon Ogunbanjo](https://gideonogunbanjo.netlify.app)'
     st.markdown(link, unsafe_allow_html=True)
