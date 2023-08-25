@@ -105,18 +105,18 @@ if uploaded_file is not None:
         if algorithm_info:
             # Display the complete code
             complete_code = f"""
-{algorithm_info['import']}
+            {algorithm_info['import']}
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-{algorithm_info['init']}
+            {algorithm_info['init']}
 
-{algorithm_info['train']}
+            {algorithm_info['train']}
 
-{algorithm_info['evaluate']}
+            {algorithm_info['evaluate']}
 
-print("Evaluation Result:", score)
-            """
+            print("Evaluation Result:", score)
+                        """
             st.code(complete_code, language="python")
 
             # # Add download button for Python file
