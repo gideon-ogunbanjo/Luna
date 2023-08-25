@@ -7,9 +7,9 @@ Luna is an interactive model tuning and evaluation app that allows users upload 
 - Algorithm Selection: Luna has a wide variety of supervised learning algorithms which users can select from a list (Random Forest, Gradient Boosting, SVM, KNN, Decision Tree, Linear Regression, Random Forest Regression).
 - Algorithm Selection: Luna has an in-built algorithm recommendation system that recommends the most suitable algorithm based on the dataset characteristics and problem type.
 - Hyper Parameter Configuration: Luna allows users configure hyperparameters of selected algorithms using sliders.
-- Data Visualization: Luna generates a Plotly line plot based on the selected columns in the dataset.
 - Interactive User Interface: Luna has an interactive UI that allows users view the model's performance metrics, such as accuracy for classification and mean squared error for regression.
-
+- Algorithm Training Code Snippets: Luna goes a step further in aiding users by providing code snippets for training the selected algorithm on the uploaded dataset. These code snippets are generated based on the user's algorithm selection, problem type, and hyperparameter configuration. Users can access these snippets directly from the UI, which they can then integrate into their own projects seamlessly.
+- Evaluation Code Snippets: Luna also offers code snippets for evaluating the trained model's performance on the dataset. Once the model is trained, users can choose to generate code snippets for evaluation, which may include calculating metrics like accuracy, precision, recall, F1-score for classification, or mean squared error, mean absolute error, and R-squared for regression. These snippets are designed to assist users in understanding how to assess the model's effectiveness.
 
 ### Limitations
 1. Limited Dataset Size: Luna is designed to handle relatively small to medium-sized datasets. For large datasets with thousands of samples and numerous features, the app's performance might be compromised, leading to slower execution times and potential memory limitations.
