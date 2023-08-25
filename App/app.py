@@ -23,12 +23,15 @@ st.title("Luna - Interactive Model Tuning, Algorithm Recommendation and Evaluati
 st.write("Luna is an interactive model tuning and evaluation app. Upload a CSV dataset, select various machine learning algorithms, fine-tune hyperparameters, and visualize model performance metrics.")
 st.header("Get Started Now!")
 
-# Upload dataset
-uploaded_file = st.file_uploader("Upload a CSV file", type=["csv"])
+# File Uploader Widget
+uploaded_file = st.file_uploader("Upload a CSV or Excel file", type=["csv", "xlsx"])  # Allows both CSV and Excel files
 
 if uploaded_file is not None:
     # Read the dataset
-    df = pd.read_csv(uploaded_file)
+    if uploaded_file.name.endswith('.csv'):
+        df = pd.read_csv(uploaded_file)
+    elif uploaded_file.name.endswith('.xlsx'):
+        df = pd.read_excel(uploaded_file, engine='openpyxl')  # 'openpyxl' engine for Excel files
 
     # Sidebar options
     st.sidebar.header("Model Configuration")
