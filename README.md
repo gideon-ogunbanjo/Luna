@@ -23,7 +23,7 @@ Luna is an interactive model tuning and evaluation app that allows users upload 
 
 6. No Data Preprocessing: Data preprocessing, such as handling missing values, outliers, and encoding categorical variables, is not covered by the app. Users need to preprocess the data externally before uploading it to Luna.
 
-7. Dataset Type: Luna is limited to **CSV Files** only for now. More updates will be released with diversity across all types of datasets.
+7. Dataset Type: Luna is limited to **CSV and Excel Files** only for now. More updates will be released with diversity across all types of datasets.
 
 ### Dependencies
 The app is built using Python and the following libraries:
