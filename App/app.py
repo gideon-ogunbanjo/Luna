@@ -1,3 +1,4 @@
+# Libraries
 import streamlit as st
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -61,7 +62,7 @@ if uploaded_file is not None:
                 return "Linear Regression"
         return None
 
-    # Display algorithm recommendation
+    # Algorithm recommendation
     recommended_algorithm = recommend_algorithm(X_train, y_train, problem_type)
     st.sidebar.subheader("Recommended Algorithm")
     st.sidebar.write(f"The recommended algorithm for this dataset is: **{recommended_algorithm}**")
@@ -96,7 +97,7 @@ if uploaded_file is not None:
             "evaluate": "score = mean_squared_error(y_test, clf.predict(X_test))",
         },
     }
-
+    # Conditions for Model Initialization
     for algorithm in algorithms:
         st.write(f"Recommended Algorithm: **{algorithm}**")
 
@@ -114,10 +115,11 @@ if uploaded_file is not None:
         elif algorithm == "Linear Regression":
             model = LinearRegression()
 
+        # Model training and predictions
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
         
-
+        # Conditions for Model Evaluation
         if problem_type == "Classification":
             accuracy = accuracy_score(y_test, y_pred)
             st.write(f"Accuracy Score: {accuracy:.4f}")
@@ -126,7 +128,7 @@ if uploaded_file is not None:
             st.write(f"Mean Squared Error: {mse:.4f}")
 
         
-
+        # Code Snippet Initialization
         st.subheader("Code Snippet:")
 
         algorithm_info = algorithm_code_snippets.get(algorithm)
