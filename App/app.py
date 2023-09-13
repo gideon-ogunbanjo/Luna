@@ -47,19 +47,31 @@ if uploaded_file is not None:
         y = pd.factorize(y)[0]  # Convert categorical target to numerical labels
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    # Algorithm Recommendation
+    # Algorithm Recommendation and selection based on their strengths and weaknesses
     def recommend_algorithm(X, y, problem_type):
         num_samples, num_features = X.shape
         if problem_type == "Classification":
             if num_samples > 1000 and num_features > 10:
-                return "Random Forest"
+                if num_samples > 10000:  # For very large datasets
+                    return "Random Forest"
+                else:
+                    return "Gradient Boosting"
             else:
-                return "Gradient Boosting"
+                if num_samples < 500:  # For small datasets
+                    return "K-Nearest Neighbors"
+                else:
+                    return "Support Vector Machine"
         elif problem_type == "Regression":
             if num_samples > 1000 and num_features > 10:
-                return "Random Forest Regression"
+                if num_samples > 10000:  # For very large datasets
+                    return "Random Forest Regression"
+                else:
+                    return "Gradient Boosting Regression"
             else:
-                return "Linear Regression"
+                if num_samples < 500:  # For small datasets
+                    return "Linear Regression"
+                else:
+                    return "Support Vector Machine Regression"
         return None
 
     # Algorithm recommendation
