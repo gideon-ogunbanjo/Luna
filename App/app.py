@@ -74,26 +74,26 @@ if uploaded_file is not None:
     algorithm_code_snippets = {
         "Random Forest": {
             "import": "from sklearn.ensemble import RandomForestClassifier",
-            "init": "clf = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth, random_state=42)",
-            "train": "clf.fit(X_train, y_train)",
+            "init": "modelmodel = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth, random_state=42)",
+            "train": "model.fit(X_train, y_train)",
             "evaluate": "score = accuracy_score(y_test, clf.predict(X_test))",
         },
         "Gradient Boosting": {
             "import": "from sklearn.ensemble import GradientBoostingClassifier",
-            "init": "clf = GradientBoostingClassifier(n_estimators=n_estimators, learning_rate=learning_rate, random_state=42)",
-            "train": "clf.fit(X_train, y_train)",
+            "init": "model = GradientBoostingClassifier(n_estimators=n_estimators, learning_rate=learning_rate, random_state=42)",
+            "train": "model.fit(X_train, y_train)",
             "evaluate": "score = accuracy_score(y_test, clf.predict(X_test))",
         },
         "Random Forest Regression": {
             "import": "from sklearn.ensemble import RandomForestRegressor",
-            "init": "clf = RandomForestRegressor(n_estimators=n_estimators, max_depth=max_depth, random_state=42)",
-            "train": "clf.fit(X_train, y_train)",
+            "init": "model = RandomForestRegressor(n_estimators=n_estimators, max_depth=max_depth, random_state=42)",
+            "train": "model.fit(X_train, y_train)",
             "evaluate": "score = mean_squared_error(y_test, clf.predict(X_test))",
         },
         "Linear Regression": {
             "import": "from sklearn.linear_model import LinearRegression",
-            "init": "clf = LinearRegression()",
-            "train": "clf.fit(X_train, y_train)",
+            "init": "model = LinearRegression()",
+            "train": "model.fit(X_train, y_train)",
             "evaluate": "score = mean_squared_error(y_test, clf.predict(X_test))",
         },
     }
