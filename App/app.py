@@ -10,6 +10,8 @@ from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 import plotly.express as px
+import xgboost
+import shap  
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
@@ -139,7 +141,18 @@ if uploaded_file is not None:
             mse = mean_squared_error(y_test, y_pred)
             st.write(f"Mean Squared Error: {mse:.4f}")
 
-        
+        # Explainability using SHAP (added for both classification and regression)
+        st.subheader("Model Explanation")
+
+        if algorithm in ["Random Forest", "Gradient Boosting", "Random Forest Regression", "Linear Regression"]:
+            explainer = shap.Explainer(model, X_train)
+            shap_values = explainer.shap_values(X_test)
+
+            # Visualize SHAP summary plot
+            st.write("SHAP Summary Plot:")
+            shap.summary_plot(shap_values, X_test, feature_names=X.columns, show=False)
+            st.pyplot()
+
         # Code Snippet Initialization
         st.subheader("Code Snippet:")
 
@@ -156,6 +169,13 @@ if uploaded_file is not None:
             {algorithm_info['train']}
 
             {algorithm_info['evaluate']}
+
+            # Explainability using SHAP
+            explainer = shap.Explainer(model, X_train)
+            shap_values = explainer.shap_values(X_test)
+
+            # Visualize SHAP summary plot
+            shap.summary_plot(shap_values, X_test, feature_names=X.columns, show=False)
 
             print("Evaluation Result:", score)
                         """
